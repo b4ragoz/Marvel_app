@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -48,9 +49,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
@@ -64,14 +70,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Marvel_appTheme {
-                HomeScreen(HeroList.list)
+                NavMenu()
             }
         }
     }
 }
 
 @Composable
-fun Carousel(heroCard: List<HeroCard>){
+fun Carousel(heroCard: List<HeroCard>, navController: NavController){
 
     val lazyListState = rememberLazyListState()
     val snapBehavior = rememberSnapFlingBehavior(lazyListState = lazyListState)
@@ -89,6 +95,8 @@ fun Carousel(heroCard: List<HeroCard>){
                         elevation = 16.dp,
                         shape = RoundedCornerShape(16.dp)
                     )
+                    .clickable { navController.navigate(heroCard.name)
+                    }
             ) {
                 Image(
                     painter = rememberAsyncImagePainter(heroCard.url),
@@ -116,7 +124,7 @@ fun Carousel(heroCard: List<HeroCard>){
 }
 
 @Composable
-fun HomeScreen(heroList: List<HeroCard>) {
+fun HomeScreen(heroList: List<HeroCard>, navController: NavController) {
     Box(Modifier.background(Color.Black))
     {
         Image(
@@ -150,15 +158,7 @@ fun HomeScreen(heroList: List<HeroCard>) {
                 )
             )
             Spacer(modifier = Modifier.height(64.dp))
-            Carousel(heroList)
+            Carousel(heroList, navController)
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Marvel_appTheme {
-        HomeScreen(HeroList.list)
     }
 }

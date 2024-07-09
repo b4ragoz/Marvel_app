@@ -1,7 +1,7 @@
 package com.example.marvel_app
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -28,38 +28,32 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowBack
 
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.Surface
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
@@ -67,58 +61,23 @@ import coil.compose.rememberImagePainter
 import com.example.marvel_app.ui.theme.Marvel_appTheme
 
 @Composable
-fun HeroScreen(heroCard: HeroCard, navController: NavController){
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ){
-        Image(
-            painter = rememberAsyncImagePainter(heroCard.url),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-
-        IconButton(
-            onClick = { navController.navigate("Home screen") },
-            modifier = Modifier
-                .padding(16.dp)
-                .size(32.dp)
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription ="Back",
-                tint = Color.White,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .fillMaxSize()
-            )
+fun NavMenu(){
+    val navController = rememberNavController()
+    NavHost(navController= navController, startDestination = "Home screen"){
+        composable("Home screen"){
+            HomeScreen(heroList = HeroList.list, navController)
         }
-
-        Column (
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = heroCard.name,
-                style = TextStyle(
-                    fontSize = 32.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.W800,
-                ),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = heroCard.info,
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.W400
-                )
-            )
+        composable("Spider-Man"){
+            HeroScreen(heroCard = HeroList.list[0], navController)
+        }
+        composable("Iron Man"){
+            HeroScreen(heroCard = HeroList.list[1], navController)
+        }
+        composable("Hulk"){
+            HeroScreen(heroCard = HeroList.list[2], navController)
+        }
+        composable("Captain\nAmerica"){
+            HeroScreen(heroCard = HeroList.list[3], navController)
         }
     }
 }
