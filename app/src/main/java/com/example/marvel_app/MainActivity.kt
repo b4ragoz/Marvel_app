@@ -42,11 +42,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,7 +95,8 @@ fun Carousel(heroCard: List<HeroCard>){
                     contentDescription = heroCard.name,
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(300.dp),
+                        .width(300.dp)
+                        .background(color = Color.hsv(0F, 0F,0.05F)),
                     contentScale = ContentScale.Crop
                 )
                 Text(
