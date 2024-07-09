@@ -64,20 +64,25 @@ import com.example.marvel_app.ui.theme.Marvel_appTheme
 fun NavMenu(){
     val navController = rememberNavController()
     NavHost(navController= navController, startDestination = "Home screen"){
+        var index = 0
         composable("Home screen"){
-            HomeScreen(heroList = HeroList.list, navController)
+            HomeScreen(heroList = HeroList.list, navController, initialItemIndex = index)
         }
         composable("Spider-Man"){
-            HeroScreen(heroCard = HeroList.list[0], navController)
+            index = 0
+            HeroScreen(heroCard = HeroList.list[index], navController)
         }
         composable("Iron Man"){
-            HeroScreen(heroCard = HeroList.list[1], navController)
+            index = 1
+            HeroScreen(heroCard = HeroList.list[index], navController)
         }
         composable("Hulk"){
-            HeroScreen(heroCard = HeroList.list[2], navController)
+            index = 2
+            HeroScreen(heroCard = HeroList.list[index], navController)
         }
         composable("Captain\nAmerica"){
-            HeroScreen(heroCard = HeroList.list[3], navController)
+            index = 3
+            HeroScreen(heroCard = HeroList.list[index], navController)
         }
     }
 }

@@ -79,9 +79,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Carousel(heroCard: List<HeroCard>, navController: NavController){
+fun Carousel(heroCard: List<HeroCard>, navController: NavController, initialItemIndex: Int){
 
-    val lazyListState = rememberLazyListState()
+    val lazyListState = rememberLazyListState(initialFirstVisibleItemIndex = initialItemIndex)
     val snapBehavior = rememberSnapFlingBehavior(lazyListState = lazyListState)
 
     LazyRow(
@@ -136,7 +136,7 @@ fun Carousel(heroCard: List<HeroCard>, navController: NavController){
 }
 
 @Composable
-fun HomeScreen(heroList: List<HeroCard>, navController: NavController) {
+fun HomeScreen(heroList: List<HeroCard>, navController: NavController, initialItemIndex: Int) {
     Box(Modifier.background(Color.Black))
     {
         Image(
@@ -170,7 +170,7 @@ fun HomeScreen(heroList: List<HeroCard>, navController: NavController) {
                 )
             )
             Spacer(modifier = Modifier.height(64.dp))
-            Carousel(heroList, navController)
+            Carousel(heroList, navController, initialItemIndex)
         }
     }
 }
