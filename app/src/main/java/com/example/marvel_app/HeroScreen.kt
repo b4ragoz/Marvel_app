@@ -45,6 +45,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -75,7 +77,19 @@ fun HeroScreen(heroCard: HeroCard, navController: NavController){
         Image(
             painter = rememberAsyncImagePainter(heroCard.url),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .drawWithCache {
+                    onDrawWithContent {
+                        drawContent()
+                        drawRect(
+                            Brush.verticalGradient(
+                                0f to Color.Black.copy(alpha=0.8f),
+                                0.25f to Color.Black.copy(alpha=0F),
+                                1F to Color.Black.copy(alpha=0.8f)
+                            ))
+                    }
+                },
             contentScale = ContentScale.Crop
         )
 
@@ -98,7 +112,7 @@ fun HeroScreen(heroCard: HeroCard, navController: NavController){
         Column (
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(16.dp)
+                .padding(32.dp)
                 .fillMaxWidth()
         ) {
             Text(
@@ -108,6 +122,7 @@ fun HeroScreen(heroCard: HeroCard, navController: NavController){
                     color = Color.White,
                     fontWeight = FontWeight.W800,
                 ),
+                lineHeight = 28.sp,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -117,7 +132,8 @@ fun HeroScreen(heroCard: HeroCard, navController: NavController){
                     fontSize = 20.sp,
                     color = Color.White,
                     fontWeight = FontWeight.W400
-                )
+                ),
+                lineHeight = 24.sp,
             )
         }
     }

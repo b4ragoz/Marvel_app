@@ -41,7 +41,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -95,8 +97,7 @@ fun Carousel(heroCard: List<HeroCard>, navController: NavController){
                         elevation = 16.dp,
                         shape = RoundedCornerShape(16.dp)
                     )
-                    .clickable { navController.navigate(heroCard.name)
-                    }
+                    .clickable { navController.navigate(heroCard.name) }
             ) {
                 Image(
                     painter = rememberAsyncImagePainter(heroCard.url),
@@ -104,7 +105,17 @@ fun Carousel(heroCard: List<HeroCard>, navController: NavController){
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(300.dp)
-                        .background(color = Color.hsv(0F, 0F,0.05F)),
+                        .background(color = Color.hsv(0F, 0F,0.05F))
+                        .drawWithCache {
+                            onDrawWithContent {
+                                drawContent()
+                                drawRect(
+                                    Brush.verticalGradient(
+                                    0.25f to Color.Black.copy(alpha=0F),
+                                    1F to Color.Black.copy(alpha=0.8f)
+                                ))
+                            }
+                        },
                     contentScale = ContentScale.Crop
                 )
                 Text(
@@ -114,6 +125,7 @@ fun Carousel(heroCard: List<HeroCard>, navController: NavController){
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     ),
+                    lineHeight = 28.sp,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                         .padding(32.dp)
