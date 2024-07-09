@@ -1,5 +1,4 @@
-package com.example.marvel_app
-import com.example.marvel_app.HeroCard
+package com.example.marvel_app.data
 
 object HeroList {  val list = listOf(
     HeroCard(
